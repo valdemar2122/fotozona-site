@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Фотозона — агентство праздничного декора и флористики</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&family=Parisienne&family=Great+Vibes&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============== TOKENS ============== */
+:root {
+  --burgundy:     #4A1622;
+  --wine:         #6B2537;
+  --cocoa:        #3B2419;
+  --cream-on-dark:#F3E5D1;
+
+  --ivory:        #FBF3EE;
+  --pearl:        #F5E8D4;
+  --latte:        #EDDBC2;
+  --champagne:    #EFDFC6;
+  --dark-text:    #2D1810;
+  --body-text:    #5A3A30;
+  --muted-text:   #8A7560;
+
+  --clay-rose:    #B07B5F;
+  --antique-gold: #B8975A;
+  --gold-light:   #D4B77A;
+  --gold-dark:    #8A6B3A;
+  --wine-deep:    #6B2537;
+  --line:         rgba(90, 58, 48, 0.18);
+
+  --almost-black: #1A0C07;
+
+  /* Brand colors for icons */
+  --whatsapp:     #4A5EF1;
+  --telegram:     #26A5E4;
+  --vk:           #0077FF;
+
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px; --s6: 96px; --s7: 128px;
+
+  --f-display: 'Playfair Display', Georgia, serif;
+  --f-serif:   'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --f-sans:    'Inter', -apple-system, system-ui, sans-serif;
+  --f-mono:    'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  font-weight: 300;
+  color: var(--dark-text);
+  background: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; }
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s5);
+}
+
+.sec-label {
+  display: block;
+  font-family: var(--f-mono);
+  font-style: normal;
+  font-size: clamp(13px, 1.05vw, 15px);
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  color: var(--cocoa);
+  margin: 0 0 var(--s4) 0;
+  padding-top: var(--s4);
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ============== HEADINGS — two-tone: cocoa main + burgundy italic ============== */
+h2 em {
+  font-style: italic;
+  font-weight: 500;
+  font-family: var(--f-serif);
+  color: #5C1826;
+  letter-spacing: -0.005em;
+}
+/* On dark (burgundy) sections, invert: cream main + champagne italic */
+.final h2 em,
+.hero-title em { color: var(--champagne); }
+
+/* Photo auto-loader — с золотой обводкой и внутренним отступом */
+.photo {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 40% 30%, var(--champagne), transparent 60%),
+    linear-gradient(135deg, var(--latte) 0%, var(--clay-rose) 60%, var(--cocoa) 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 4px var(--ivory),
+    0 0 0 6px var(--antique-gold);
+}
+/* Убираем золотые рамки с декоративных флора-слоёв в hero и мелких аватарок */
+.hero .photo,
+.hero-flora-left, .hero-flora-right,
+.ravatar.photo,
+.t-photo.photo { box-shadow: none; }
+
+.ravatar.photo {
+  box-shadow: 0 0 0 2px var(--antique-gold);
+}
+.photo-num {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(243, 229, 209, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(243, 229, 209, 0.5);
+  pointer-events: none;
+}
+.photo[data-set="true"] .photo-num { display: none; }
+
+/* ============== 01 HERO — фото 20 + текст поверх ============== */
+.hero {
+  position: relative;
+  min-height: 55vh;
+  background: #280700;
+  overflow: hidden;
+  color: var(--cream-on-dark);
+  display: flex;
+  flex-direction: column;
+}
+/* Декоративные георгины на краях — замена фото */
+.hero-bg-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: none;
+}
+.hero-bg-photo::before,
+.hero-bg-photo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 80vh;
+  height: 80vh;
+  max-width: 55vw;
+  max-height: 120vh;
+  transform: translateY(-50%);
+  background-image: url('./photos/dahlia-real.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 40px rgba(255, 245, 220, 0.35)) drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55));
+  opacity: 0.95;
+}
+.hero-bg-photo::before {
+  left: -18vw;
+  background-position: left center;
+}
+.hero-bg-photo::after {
+  right: -18vw;
+  background-position: right center;
+  transform: translateY(-50%) scaleX(-1);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 25%, rgba(15, 4, 10, 0.45) 75%, rgba(15, 4, 10, 0.7) 100%);
+  z-index: 1;
+}
+
+/* === Падающие светящиеся крупицы === */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-particles .particle {
+  position: absolute;
+  top: -10px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #f8eede 50%, rgba(240, 225, 200, 0) 80%);
+  box-shadow:
+    0 0 4px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(250, 240, 220, 0.4),
+    0 0 16px rgba(220, 195, 150, 0.2);
+  opacity: 0;
+  animation: particle-fall linear infinite;
+}
+.hero-particles .particle.tiny {
+  width: 1px;
+  height: 1px;
+  box-shadow:
+    0 0 3px rgba(255, 255, 255, 0.75),
+    0 0 6px rgba(250, 240, 220, 0.3);
+}
+.hero-particles .particle.micro {
+  width: 1.5px;
+  height: 1.5px;
+  box-shadow:
+    0 0 3px rgba(255, 255, 255, 0.8),
+    0 0 7px rgba(250, 240, 220, 0.35),
+    0 0 12px rgba(220, 195, 150, 0.18);
+}
+@keyframes particle-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0), 110vh, 0);
+    opacity: 0;
+  }
+}
+
+.hero-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--s3) var(--s5);
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.hero-nav-center { display: flex; gap: var(--s4); }
+.hero-nav-center a {
+  transition: all .3s;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  color: var(--cream-on-dark);
+}
+.hero-nav-center a:hover { border-bottom-color: var(--cream-on-dark); }
+
+.hero-main {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--s5) var(--s4);
+}
+.hero-kicker {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  opacity: 0.78;
+  margin-bottom: var(--s3);
+}
+.hero-title {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(50px, 7.7vw, 126px);
+  line-height: 0.95;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--s2);
+  text-transform: uppercase;
+  color: #F7E4B4;
+  text-shadow:
+    0 0 14px rgba(247, 228, 180, 0.55),
+    0 0 28px rgba(240, 216, 152, 0.5),
+    0 0 50px rgba(217, 180, 96, 0.45),
+    0 0 90px rgba(184, 151, 90, 0.35);
+  animation: hero-glow 3.5s ease-in-out infinite;
+}
+@keyframes hero-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 14px rgba(247, 228, 180, 0.55),
+      0 0 28px rgba(240, 216, 152, 0.5),
+      0 0 50px rgba(217, 180, 96, 0.45),
+      0 0 90px rgba(184, 151, 90, 0.35);
+  }
+  50% {
+    text-shadow:
+      0 0 18px rgba(247, 228, 180, 0.7),
+      0 0 36px rgba(240, 216, 152, 0.6),
+      0 0 60px rgba(217, 180, 96, 0.55),
+      0 0 110px rgba(184, 151, 90, 0.45);
+  }
+}
+.hero-role {
+  font-family: 'Great Vibes', 'Parisienne', cursive;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(24px, 2.91vw, 40px);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: #F5E7D0;
+  text-shadow:
+    0 1px 14px rgba(0, 0, 0, 0.6),
+    0 0 22px rgba(240, 223, 198, 0.25),
+    0 0 38px rgba(217, 180, 96, 0.2);
+  margin: var(--s3) 0 var(--s4);
+  max-width: 820px;
+}
+.hero-role::first-letter {
+  font-size: 2.2em;
+  line-height: 0.85;
+  padding-right: 6px;
+  color: #F5E7D0;
+}
+.hero-slogan {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  opacity: 0.85;
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(243, 229, 209, 0.4);
+  max-width: 620px;
+}
+.hero-slogan .sep { margin: 0 var(--s1); color: var(--clay-rose); }
+
+.hero-foot {
+  position: relative;
+  z-index: 5;
+  padding: var(--s3) var(--s5) var(--s4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--s3);
+  text-align: center;
+}
+.hero-cats {
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(18px, 1.7vw, 24px);
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  opacity: 1;
+  color: #F0DFC6;
+  margin-top: var(--s2);
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(240, 223, 198, 0.32);
+  width: max-content;
+  max-width: 95vw;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+}
+.hero-phone-big {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 56px);
+  color: var(--cream-on-dark);
+  letter-spacing: 0.02em;
+  padding: 10px 28px;
+  border-top: 1px solid rgba(243, 229, 209, 0.35);
+  border-bottom: 1px solid rgba(243, 229, 209, 0.35);
+  transition: all .3s;
+  display: inline-block;
+}
+.hero-phone-big:hover {
+  letter-spacing: 0.04em;
+  border-color: var(--cream-on-dark);
+}
+
+/* ============== CONTACT STRIP — ярче и крупнее ============== */
+.contact-strip {
+  background: linear-gradient(180deg, var(--pearl) 0%, var(--latte) 100%);
+  padding: var(--s4) 0;
+  border-top: 3px solid var(--burgundy);
+  border-bottom: 3px solid var(--burgundy);
+  box-shadow: 0 4px 20px -10px rgba(74, 22, 34, 0.2);
+}
+.contact-strip .row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--s5);
+  align-items: center;
+}
+.contact-strip .row .contact-cta {
+  justify-self: center;
+}
+.contact-strip .row .phone-link {
+  justify-self: start;
+}
+.contact-strip .row .geo {
+  justify-self: end;
+}
+.contact-strip .phone-link {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(28px, 3.2vw, 44px);
+  color: var(--burgundy);
+  letter-spacing: 0.02em;
+  transition: all .3s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.contact-strip .phone-link:hover {
+  color: #5C1826;
+  transform: scale(1.02);
+}
+.contact-strip .socials {
+  display: flex;
+  justify-content: center;
+  gap: var(--s3);
+}
+.contact-strip .socials a {
+  width: 54px; height: 54px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--ivory);
+  box-shadow: 0 4px 14px -4px rgba(74, 22, 34, 0.25);
+  transition: all .3s;
+  border: 2px solid transparent;
+}
+.contact-strip .socials a:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 20px -4px rgba(74, 22, 34, 0.4);
+}
+.contact-strip .socials svg { width: 26px; height: 26px; }
+.contact-strip .socials .wa svg { fill: var(--whatsapp); }
+.contact-strip .socials .tg svg { fill: var(--telegram); }
+.contact-strip .socials .vk svg { fill: var(--vk); }
+.contact-strip .geo {
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 600;
+  color: var(--burgundy);
+  letter-spacing: 0.01em;
+  text-align: right;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.contact-strip .cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s3);
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(74, 22, 34, 0.2);
+}
+.socials-above-cta {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+.contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: var(--burgundy);
+  color: var(--ivory);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px -8px rgba(74, 22, 34, 0.5);
+  transition: all .3s;
+  cursor: pointer;
+  border: none;
+}
+.contact-cta:hover {
+  background: #5C1826;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(74, 22, 34, 0.6);
+}
+.contact-cta svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* ============== БЕГУЩАЯ ЗОЛОТАЯ СТРОКА ============== */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #1F140A 0%, #2C1C10 50%, #1F140A 100%);
+  padding: 18px 0;
+  border-top: 2px solid var(--antique-gold);
+  border-bottom: 2px solid var(--antique-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(217, 180, 96, 0.25),
+    inset 0 -1px 0 rgba(217, 180, 96, 0.25),
+    0 0 20px rgba(184, 151, 90, 0.15);
+}
+.marquee::before, .marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee::before { left: 0; background: linear-gradient(90deg, #1F140A, transparent); }
+.marquee::after  { right: 0; background: linear-gradient(-90deg, #1F140A, transparent); }
+.marquee-track {
+  display: inline-flex;
+  animation: marquee-scroll 45s linear infinite;
+  white-space: nowrap;
+  gap: var(--s4);
+  align-items: center;
+  padding-left: var(--s4);
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-item {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(18px, 1.9vw, 24px);
+  letter-spacing: 0.02em;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: #F0D3AE;
+  filter: drop-shadow(0 0 4px rgba(240, 211, 174, 0.35));
+}
+.marquee-sep {
+  color: #F0D3AE;
+  font-size: 14px;
+  opacity: 1;
+  filter: drop-shadow(0 0 3px rgba(240, 211, 174, 0.3));
+}
+
+.why {
+  background: var(--pearl);
+  padding: var(--s5) 0;
+  border-bottom: 1px solid var(--line);
+  display: none;
+}
+.why-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s4);
+}
+.why-head .bar {
+  width: 3px;
+  height: 24px;
+  background: var(--burgundy);
+}
+.why-head h3 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 32px);
+  color: var(--cocoa);
+  letter-spacing: -0.02em;
+}
+.why-head .line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  margin-left: var(--s2);
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s2);
+}
+.why-card {
+  padding: var(--s3);
+  border: 1.5px solid var(--burgundy);
+  border-radius: 10px;
+  background: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  position: relative;
+  transition: all .3s;
+}
+.why-card::before {
+  content: '';
+  position: absolute;
+  left: -8px; top: 50%;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--burgundy);
+  transform: translateY(-50%);
+}
+.why-card:hover { background: var(--champagne); }
+.why-card .why-num {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--burgundy);
+}
+.why-card .why-txt {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--cocoa);
+  letter-spacing: -0.01em;
+}
+
+/* ============== PACKAGES (пакеты с ценами) ============== */
+.packages {
+  background: var(--ivory);
+  padding: var(--s4) 0 var(--s5);
+}
+.packages-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s5);
+}
+.packages-head .bar {
+  width: 3px;
+  height: 28px;
+  background: var(--burgundy);
+}
+.packages-head h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.4vw, 46px);
+  line-height: 1;
+  color: var(--cocoa);
+  letter-spacing: -0.02em;
+}
+.packages-head h2 em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: #5C1826;
+}
+.packages-head .line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  margin-left: var(--s2);
+}
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s3);
+}
+.pack-card {
+  border: 3px solid var(--antique-gold);
+  border-radius: 4px;
+  background: var(--cocoa);
+  color: var(--cream-on-dark);
+  padding: var(--s5) var(--s4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  position: relative;
+  transition: all .3s;
+  min-height: 420px;
+  overflow: hidden;
+}
+.pack-card.center {
+  background: var(--pearl);
+  color: var(--cocoa);
+  transform: translateY(-12px);
+  box-shadow: 0 24px 50px -18px rgba(59, 36, 25, 0.4);
+}
+.pack-card::before { content: none; display: none; }
+.pack-card.center::before { content: none; display: none; }
+/* Золотые орнаменты в углах */
+.pack-card::after {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
+  border: 1px solid rgba(184, 151, 90, 0.3);
+  pointer-events: none;
+}
+.pack-card > * { position: relative; z-index: 1; }
+.pack-card:hover { transform: translateY(-6px); }
+.pack-card.center:hover { transform: translateY(-18px); }
+.pack-title {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(22px, 2.5vw, 36px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold-light);
+  text-align: center;
+  margin-bottom: var(--s2);
+  text-transform: uppercase;
+  text-shadow:
+    0 0 12px rgba(212, 183, 122, 0.6),
+    0 0 28px rgba(184, 151, 90, 0.45),
+    0 0 50px rgba(184, 151, 90, 0.25);
+}
+.pack-card.center .pack-title {
+  color: var(--wine-deep);
+  text-shadow:
+    0 0 14px rgba(107, 37, 55, 0.35),
+    0 0 28px rgba(107, 37, 55, 0.2);
+}
+.pack-price {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(36px, 4.2vw, 56px);
+  color: var(--antique-gold);
+  text-align: center;
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid rgba(184, 151, 90, 0.35);
+  margin-bottom: var(--s2);
+  line-height: 1;
+}
+.pack-card.center .pack-price { color: var(--wine-deep); border-bottom-color: rgba(107, 37, 55, 0.3); }
+.pack-price .from {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--antique-gold);
+  display: block;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+.pack-card.center .pack-price .from { color: var(--clay-rose); opacity: 0.9; }
+.pack-section-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-top: var(--s2);
+  margin-bottom: var(--s1);
+}
+.pack-card.center .pack-section-title { color: var(--wine-deep); }
+.pack-for {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--cream-on-dark);
+  font-weight: 400;
+  margin-bottom: var(--s2);
+  opacity: 0.95;
+}
+.pack-card.center .pack-for { color: var(--cocoa); opacity: 1; font-weight: 500; }
+.pack-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.pack-list li {
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--cream-on-dark);
+  font-weight: 400;
+  padding-left: 22px;
+  position: relative;
+  opacity: 0.95;
+}
+.pack-card.center .pack-list li { color: var(--cocoa); opacity: 1; }
+.pack-list li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  color: var(--gold-light);
+  font-size: 10px;
+}
+.pack-card.center .pack-list li::before { color: var(--wine-deep); }
+.pack-diff {
+  margin-top: var(--s3);
+  padding: var(--s3);
+  background: rgba(184, 151, 90, 0.1);
+  border-left: 3px solid var(--antique-gold);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--cream-on-dark);
+  font-weight: 400;
+  font-style: italic;
+}
+.pack-card.center .pack-diff {
+  background: rgba(107, 37, 55, 0.08);
+  border-left-color: var(--wine-deep);
+  color: var(--cocoa);
+}
+.pack-btn {
+  margin-top: var(--s3);
+  padding: 22px 32px;
+  border: 1px solid var(--antique-gold);
+  background: transparent;
+  color: var(--gold-light);
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  text-align: center;
+  transition: all .4s;
+  cursor: pointer;
+  display: block;
+  text-shadow:
+    0 0 14px rgba(212, 183, 122, 0.55),
+    0 0 28px rgba(184, 151, 90, 0.35);
+  box-shadow:
+    0 0 22px rgba(184, 151, 90, 0.2),
+    inset 0 0 18px rgba(184, 151, 90, 0.08);
+  animation: btn-glow 3s ease-in-out infinite;
+}
+@keyframes btn-glow {
+  0%, 100% {
+    box-shadow: 0 0 22px rgba(184, 151, 90, 0.2), inset 0 0 18px rgba(184, 151, 90, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 34px rgba(184, 151, 90, 0.4), inset 0 0 24px rgba(184, 151, 90, 0.15);
+  }
+}
+.pack-btn:hover {
+  background: var(--antique-gold);
+  color: var(--cocoa);
+  text-shadow: none;
+}
+.pack-card.center .pack-btn {
+  border-color: var(--wine-deep);
+  color: var(--wine-deep);
+  text-shadow:
+    0 0 12px rgba(107, 37, 55, 0.3),
+    0 0 24px rgba(107, 37, 55, 0.18);
+  box-shadow: 0 0 20px rgba(107, 37, 55, 0.15);
+  animation: none;
+}
+.pack-card.center .pack-btn:hover {
+  background: var(--wine-deep);
+  color: var(--pearl);
+  text-shadow: none;
+}
+
+/* Reviews grid — multiple cards */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s3);
+  margin-top: var(--s4);
+}
+.review-card {
+  background: var(--pearl);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: var(--s5) var(--s4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.review-card .rh {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--line);
+}
+.review-card .ravatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background:
+    radial-gradient(ellipse at 40% 30%, var(--champagne), transparent 60%),
+    linear-gradient(135deg, var(--latte) 0%, var(--clay-rose) 100%);
+  background-size: cover;
+  background-position: center;
+}
+.review-card .ravatar.ravatar-pair {
+  width: 120px;
+  height: 72px;
+  border-radius: 40px;
+  background-image: url('./photos/photo-25.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  box-shadow: none !important;
+}
+.review-card .rname {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--cocoa);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.review-card .revent {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: var(--clay-rose);
+  margin-top: 4px;
+  font-weight: 500;
+}
+.review-card p {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--cocoa);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.review-card p::before {
+  content: '«';
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 62px;
+  line-height: 0;
+  color: var(--antique-gold);
+  margin-right: 8px;
+  vertical-align: -22px;
+  font-style: normal;
+}
+
+/* ============== Контакт-блок под отзывами ============== */
+.reviews-contact {
+  margin-top: var(--s6);
+  padding: var(--s5) var(--s4);
+  background: linear-gradient(180deg, var(--cocoa) 0%, #2A1610 100%);
+  border: 1px solid var(--antique-gold);
+  border-radius: 6px;
+  color: var(--cream-on-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s3);
+  text-align: center;
+  box-shadow: 0 0 40px rgba(184, 151, 90, 0.15);
+}
+.reviews-contact-title {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--cream-on-dark);
+  margin: 0;
+}
+.reviews-contact-title em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  color: var(--gold-light);
+  font-weight: 500;
+}
+.reviews-contact-phone {
+  font-family: var(--f-display);
+  font-size: clamp(34px, 4.8vw, 64px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--gold-light);
+  text-shadow: 0 0 24px rgba(217, 180, 96, 0.45);
+  transition: all .3s;
+}
+.reviews-contact-phone:hover {
+  color: #fff6d8;
+  text-shadow: 0 0 32px rgba(255, 246, 216, 0.65);
+}
+.reviews-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 38px;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--antique-gold) 100%);
+  color: var(--cocoa);
+  font-family: var(--f-ui);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 40px;
+  box-shadow: 0 0 22px rgba(184, 151, 90, 0.35), 0 8px 22px rgba(0, 0, 0, 0.3);
+  transition: transform .25s, box-shadow .25s;
+}
+.reviews-contact-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.reviews-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(217, 180, 96, 0.55), 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.reviews-contact-socials {
+  display: flex;
+  gap: var(--s3);
+  margin-top: var(--s1);
+}
+.reviews-contact-socials a {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 180, 96, 0.35);
+  transition: all .3s;
+  background: rgba(255, 255, 255, 0.05);
+}
+.reviews-contact-socials a:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 22px rgba(217, 180, 96, 0.4);
+}
+.reviews-contact-socials svg {
+  width: 24px;
+  height: 24px;
+}
+.reviews-contact-socials .wa svg { fill: #4A5EF1; }
+.reviews-contact-socials .tg svg { fill: #2AABEE; }
+.reviews-contact-socials .vk svg { fill: #5181B8; }
+
+/* ============== AGENCY BLOCK — полноэкранное фото + горизонтальные карточки ============== */
+.agency {
+  background: var(--ivory);
+  padding: 0;
+}
+.agency-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  color: var(--cream-on-dark);
+  background: var(--cocoa);
+}
+.agency-photo-bg {
+  position: relative;
+  width: 100%;
+  display: block;
+  z-index: 0;
+  aspect-ratio: 1280 / 691;
+  overflow: hidden;
+}
+.agency-photo-bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 16.67%;
+}
+.agency-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(20, 10, 6, 0) 0%, rgba(20, 10, 6, 0) 38%, rgba(20, 10, 6, 0.4) 62%, rgba(20, 10, 6, 0.78) 100%);
+  pointer-events: none;
+}
+.agency-hero-content {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 5;
+  text-align: right;
+  padding: var(--s4) var(--s5) var(--s4) var(--s4);
+  max-width: 560px;
+  width: auto;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .agency-hero-content {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    transform: none;
+    text-align: center;
+    max-width: none;
+    padding: var(--s4);
+  }
+}
+.agency-label-left {
+  position: absolute;
+  top: var(--s4);
+  left: var(--s5);
+  z-index: 5;
+}
+.agency-label-left .sec-label {
+  margin: 0;
+  padding-top: 0;
+  color: #FBF3EE !important;
+  opacity: 0.95;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7), 0 0 14px rgba(217, 180, 96, 0.25);
+}
+@media (max-width: 900px) {
+  .agency-label-left {
+    top: var(--s3);
+    left: var(--s3);
+  }
+}
+.agency-hero-content h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.64vw, 53px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--cream-on-dark);
+  margin-bottom: var(--s3);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  white-space: normal;
+}
+.agency-hero-content h2 em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  color: var(--gold-light);
+  font-weight: 500;
+}
+.agency-sub {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 28px);
+  font-weight: 500;
+  color: #fff6e3;
+  line-height: 1.4;
+  max-width: none;
+  width: auto;
+  margin: 0 0 0 auto;
+  letter-spacing: -0.005em;
+  opacity: 1;
+  white-space: normal;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 4px 24px rgba(0, 0, 0, 0.7),
+    0 0 30px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 900px) {
+  .agency-sub {
+    max-width: 90vw;
+    font-size: clamp(15px, 3.4vw, 20px);
+  }
+}
+.agency-sub strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--gold-light);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(217, 180, 96, 0.4);
+}
+
+.agency-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s2);
+  padding: var(--s4) 0 var(--s5);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.agency-card {
+  padding: var(--s3);
+  border: 1px solid var(--antique-gold);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--burgundy) 0%, #3A0E1A 100%);
+  color: var(--cream-on-dark);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  transition: all .4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.agency-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(184, 151, 90, 0.12), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.agency-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-light);
+  box-shadow:
+    0 0 30px rgba(184, 151, 90, 0.35),
+    0 0 60px rgba(212, 183, 122, 0.2),
+    0 14px 30px -10px rgba(74, 22, 34, 0.5);
+}
+.agency-card:hover::before { opacity: 1; }
+.agency-card > * { position: relative; z-index: 1; }
+.agency-card .num {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 46px;
+  color: var(--gold-light);
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 0 14px rgba(212, 183, 122, 0.45);
+}
+.agency-card p {
+  font-family: var(--f-serif);
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--cream-on-dark);
+  font-weight: 400;
+  opacity: 0.95;
+}
+.agency-card p strong {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-light);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 20px;
+  letter-spacing: 0.005em;
+  text-shadow: 0 0 10px rgba(212, 183, 122, 0.25);
+}
+.agency-card:hover p strong {
+  text-shadow: 0 0 18px rgba(212, 183, 122, 0.55);
+}
+
+/* ============== 03 WORKS CAROUSEL ============== */
+.works {
+  background: var(--pearl);
+  padding: var(--s4) 0 var(--s5);
+  overflow: hidden;
+}
+.works-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s4);
+  margin-bottom: var(--s4);
+  padding: 0 var(--s5);
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.works-head h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cocoa);
+}
+.works-nav {
+  display: flex;
+  gap: var(--s2);
+}
+.works-nav button {
+  width: 52px; height: 52px;
+  border: 1px solid var(--burgundy);
+  background: transparent;
+  color: var(--burgundy);
+  font-family: var(--f-display);
+  font-size: 22px;
+  transition: all .3s;
+}
+.works-nav button:hover { background: var(--burgundy); color: var(--ivory); }
+
+.works-track {
+  display: flex;
+  gap: var(--s3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0 var(--s5) var(--s3);
+  scrollbar-width: none;
+}
+.works-track::-webkit-scrollbar { display: none; }
+.work-card {
+  flex: 0 0 auto;
+  width: min(380px, 70vw);
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  cursor: pointer;
+}
+.work-card .photo {
+  aspect-ratio: 4 / 5;
+  transition: transform .5s;
+}
+.work-card:hover .photo { transform: scale(1.01); }
+.work-card .work-title {
+  font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--dark-text);
+  letter-spacing: -0.01em;
+  margin-top: var(--s2);
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+.work-card .work-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--burgundy) 0%, var(--antique-gold) 100%);
+  border-radius: 3px;
+}
+.work-card .work-tag {
+  font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--cocoa);
+  opacity: 0.85;
+  line-height: 1.45;
+  margin-top: 10px;
+}
+.works-hint {
+  text-align: center;
+  margin-top: var(--s3);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--muted-text);
+}
+
+/* ============== 04 CONSULT ============== */
+.consult {
+  background:
+    radial-gradient(ellipse at 20% 25%, rgba(120, 80, 45, 0.55) 0%, transparent 65%),
+    linear-gradient(135deg, #4A2E1C 0%, #3B2419 55%, #2A1810 100%);
+  padding: var(--s4) 0 var(--s5);
+  color: #F3E5D1;
+}
+.consult .sec-label {
+  color: #E8D5BC !important;
+  opacity: 0.9;
+}
+.consult-text h2 {
+  color: #FBF3EE !important;
+  text-shadow:
+    0 0 14px rgba(217, 180, 96, 0.45),
+    0 0 28px rgba(184, 151, 90, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.consult-text h2 em {
+  color: var(--gold-light) !important;
+  text-shadow:
+    0 0 16px rgba(217, 180, 96, 0.55),
+    0 0 32px rgba(184, 151, 90, 0.3);
+}
+.consult-text p {
+  color: #E8D5BC !important;
+  font-weight: 400 !important;
+  opacity: 0.92;
+}
+.consult-phone {
+  border-top-color: rgba(232, 213, 188, 0.25) !important;
+}
+.consult-phone .l {
+  color: rgba(232, 213, 188, 0.7) !important;
+}
+.consult-phone .num {
+  color: var(--gold-light) !important;
+  text-shadow: 0 0 14px rgba(217, 180, 96, 0.4);
+}
+.consult-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--s5);
+  align-items: center;
+}
+.consult-photo {
+  aspect-ratio: 4 / 5;
+  max-width: 418px;
+  width: 100%;
+  justify-self: start;
+}
+.consult-text h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--cocoa);
+  margin-bottom: var(--s3);
+  max-width: 560px;
+}
+.consult-text p {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--cocoa);
+  margin-bottom: var(--s2);
+  font-weight: 300;
+  max-width: 560px;
+}
+.consult-text p + p { margin-top: var(--s1); }
+.consult-phone {
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  display: inline-block;
+}
+.consult-phone .l {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--muted-text);
+  margin-bottom: 10px;
+}
+.consult-phone .num {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 40px);
+  color: var(--burgundy);
+  letter-spacing: 0.01em;
+  transition: opacity .3s;
+}
+.consult-phone .num:hover { opacity: 0.7; }
+
+/* ============== 05 PROCESS ============== */
+.process {
+  background: var(--pearl);
+  padding: var(--s4) 0 var(--s5);
+}
+.process-head {
+  text-align: center;
+  margin-bottom: var(--s4);
+}
+.process-head h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.75vw, 36px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cocoa);
+}
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s3);
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+}
+.step .step-num {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--clay-rose);
+  margin-bottom: var(--s1);
+}
+.step .photo { aspect-ratio: 1 / 1; margin-bottom: var(--s2); }
+.step .step-title {
+  font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--dark-text);
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+.step .step-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--burgundy) 0%, var(--antique-gold) 100%);
+  border-radius: 3px;
+}
+.step .step-desc {
+  font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cocoa);
+  font-weight: 500;
+  opacity: 0.88;
+  margin-top: 8px;
+}
+
+/* ============== 06 REVIEWS — одна фотка владелицы, меняются только цитаты ============== */
+.reviews {
+  background: var(--ivory);
+  padding: var(--s4) 0 var(--s5);
+}
+.reviews-head {
+  text-align: center;
+  margin-bottom: var(--s4);
+}
+.reviews-head h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cocoa);
+}
+.t-slide {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--s4);
+  align-items: center;
+  min-height: 360px;
+}
+.t-photo {
+  aspect-ratio: 5 / 4;
+  max-width: 540px;
+  width: 100%;
+  justify-self: start;
+}
+.t-content {
+  position: relative;
+  padding-left: var(--s4);
+}
+.t-quote-mark {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 140px;
+  line-height: 0.7;
+  color: var(--clay-rose);
+  position: absolute;
+  left: -10px; top: -20px;
+  opacity: 0.2;
+}
+.t-quote {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--dark-text);
+  margin-bottom: var(--s3);
+  position: relative;
+  z-index: 1;
+}
+.t-name {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--burgundy);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.t-event {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--muted-text);
+}
+.t-nav {
+  display: flex;
+  gap: var(--s3);
+  margin-top: var(--s5);
+  align-items: center;
+}
+.t-arrow {
+  font-family: var(--f-display);
+  font-size: 32px;
+  color: var(--dark-text);
+  cursor: pointer;
+  transition: color .3s;
+  padding: 4px 12px;
+  background: transparent;
+}
+.t-arrow:hover { color: var(--burgundy); }
+.t-counter {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--muted-text);
+}
+
+/* ============== 07 FINAL — стоимость -30% шрифт ============== */
+.final {
+  background: linear-gradient(180deg, var(--burgundy) 0%, var(--wine) 100%);
+  color: var(--cream-on-dark);
+  padding: var(--s6) 0 var(--s5);
+}
+.final-head {
+  text-align: center;
+  margin-bottom: var(--s5);
+}
+.final-head .sec-label { color: rgba(243, 229, 209, 0.6); }
+.final-head h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s3);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.final-head p {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.5;
+  opacity: 0.9;
+  max-width: 640px;
+  margin: 0 auto;
+  letter-spacing: -0.01em;
+}
+
+.final-contacts {
+  max-width: 860px;
+  margin: 0 auto;
+  padding-top: var(--s4);
+  border-top: 1px solid rgba(243, 229, 209, 0.2);
+}
+.final-hours {
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  opacity: 0.65;
+  margin-bottom: var(--s4);
+}
+.final-block-title {
+  text-align: center;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 28px);
+  margin-bottom: var(--s3);
+  letter-spacing: -0.01em;
+}
+
+/* Social chips with real icons */
+.final-chips {
+  display: flex;
+  justify-content: center;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s4);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid rgba(243, 229, 209, 0.35);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  color: var(--cream-on-dark);
+  background: rgba(243, 229, 209, 0.04);
+  transition: all .3s;
+  min-width: 160px;
+  justify-content: center;
+}
+.chip .icn {
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  padding: 2px;
+  background: #fff;
+  transition: transform .3s;
+}
+.chip:hover .icn { transform: scale(1.1); }
+
+/* WhatsApp — brand green */
+.chip.wa .icn { fill: var(--whatsapp); }
+.chip.wa:hover { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
+
+/* Telegram — brand blue */
+.chip.tg .icn { fill: var(--telegram); }
+.chip.tg:hover { background: var(--telegram); border-color: var(--telegram); color: #fff; }
+
+/* VK — brand blue */
+.chip.vk .icn { fill: var(--vk); }
+.chip.vk:hover { background: var(--vk); border-color: var(--vk); color: #fff; }
+
+.final-or {
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  margin: var(--s3) 0;
+  position: relative;
+}
+.final-or::before, .final-or::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 70px; height: 1px;
+  background: rgba(243, 229, 209, 0.22);
+}
+.final-or::before { right: calc(50% + 45px); }
+.final-or::after  { left:  calc(50% + 45px); }
+
+.final-call {
+  text-align: center;
+}
+.final-call .l {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  opacity: 0.6;
+  margin-bottom: var(--s2);
+}
+.final-call .num {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.1vw, 42px);
+  color: var(--cream-on-dark);
+  letter-spacing: 0.02em;
+  padding: 8px 22px;
+  border-top: 1px solid rgba(243, 229, 209, 0.35);
+  border-bottom: 1px solid rgba(243, 229, 209, 0.35);
+  display: inline-block;
+  transition: all .3s;
+}
+.final-call .num:hover {
+  border-color: var(--cream-on-dark);
+  letter-spacing: 0.04em;
+}
+
+/* ============== FOOTER ============== */
+footer {
+  background: var(--almost-black);
+  color: rgba(243, 229, 209, 0.55);
+  padding: var(--s4) 0 var(--s3);
+  overflow: hidden;
+}
+.footer-mark {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(72px, 16vw, 240px);
+  line-height: 0.85;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(176, 123, 95, 0.3);
+  margin-bottom: var(--s3);
+  user-select: none;
+  text-transform: uppercase;
+}
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(243, 229, 209, 0.08);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+.footer-socials { display: flex; gap: var(--s2); align-items: center; }
+.footer-socials a {
+  width: 34px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .3s;
+}
+.footer-socials a:hover { transform: scale(1.1); }
+.footer-socials svg { width: 18px; height: 18px; }
+.footer-socials .wa svg { fill: var(--whatsapp); }
+.footer-socials .tg svg { fill: var(--telegram); }
+.footer-socials .vk svg { fill: var(--vk); }
+
+/* ============== MOBILE ============== */
+@media (max-width: 960px) {
+  .wrap { padding: 0 var(--s3); }
+  .hero-nav { padding: var(--s2) var(--s3); flex-wrap: wrap; gap: var(--s2); justify-content: center; text-align: center; }
+  .hero-nav-center { order: 3; width: 100%; justify-content: center; gap: var(--s2); font-size: 9px; }
+  .hero-main { padding: var(--s4) var(--s3); }
+  .hero-foot { padding: var(--s3) var(--s3); flex-direction: column; gap: var(--s1); text-align: center; }
+
+  .agency, .works, .consult, .process, .reviews, .final { padding: var(--s5) 0; }
+
+  .agency-grid { grid-template-columns: 1fr; gap: var(--s4); }
+  .works-head { padding: 0 var(--s3); flex-direction: column; align-items: flex-start; }
+  .works-track { padding: 0 var(--s3) var(--s2); }
+  .work-card { width: 85vw; }
+  .consult-grid { grid-template-columns: 1fr; gap: var(--s4); }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+  .t-slide { grid-template-columns: 1fr; gap: var(--s3); min-height: auto; }
+  .t-quote-mark { font-size: 120px; top: -20px; }
+  .t-content { padding-left: var(--s3); }
+  .chip { min-width: 140px; padding: 11px 16px; }
+  .final-or::before, .final-or::after { display: none; }
+  .footer-row { flex-direction: column; gap: var(--s2); text-align: center; }
+  .footer-mark { font-size: 56px; }
+}
+@media (max-width: 960px) {
+  .why, .packages { padding: var(--s5) 0; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .packages-grid { grid-template-columns: 1fr; }
+  .pack-card.center { transform: none; }
+  .pack-card.center:hover { transform: translateY(-4px); }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .contact-strip .row { grid-template-columns: 1fr; gap: var(--s2); text-align: center; }
+  .contact-strip .geo { text-align: center; }
+  .hero-flora-left, .hero-flora-right { width: 60%; opacity: 0.15; }
+}
+@media (max-width: 520px) {
+  .process-grid { grid-template-columns: 1fr; }
+  .final-chips { flex-direction: column; align-items: center; }
+  .chip { width: 100%; max-width: 280px; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== 01 HERO — бордовый фон с цветами, только текст ============== -->
+<section class="hero">
+  <div class="hero-bg-photo"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-particles" id="hero-particles"></div>
+
+  <header class="hero-nav">
+    <div class="hero-nav-center">
+      <a href="#agency">О нас</a>
+      <a href="#packages">Пакеты</a>
+      <a href="#works">Работы</a>
+      <a href="#process">Как работаем</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="tel:+79595862550">Контакты</a>
+    </div>
+  </header>
+
+  <div class="hero-main">
+    <div style="flex:1"></div>
+    <h1 class="hero-title">ФОТОЗОНА</h1>
+    <p class="hero-role">Агентство праздничного декора</p>
+    <div class="hero-cats">Свадьбы · Юбилеи · Корпоративы · Детские праздники · Съёмки</div>
+    <div style="flex:1"></div>
+  </div>
+</section>
+
+<!-- ============== БЕГУЩАЯ ЗОЛОТАЯ СТРОКА С ДОСТИЖЕНИЯМИ ============== -->
+<section class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Более 50 оформленных мероприятий</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Работаем с 2021 года</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Фиксированная цена — без скрытых доплат</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">100% клиентов рекомендуют нас</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Бесплатный эскиз и смета</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Работаем по договору</span>
+    <span class="marquee-sep">✦</span>
+    <!-- дубль для бесшовной петли -->
+    <span class="marquee-item">Более 50 оформленных мероприятий</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Работаем с 2021 года</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Фиксированная цена — без скрытых доплат</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">100% клиентов рекомендуют нас</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Бесплатный эскиз и смета</span>
+    <span class="marquee-sep">✦</span>
+    <span class="marquee-item">Работаем по договору</span>
+    <span class="marquee-sep">✦</span>
+  </div>
+</section>
+
+<!-- ============== КОНТАКТ-ЛЕНТА: телефон + соцсети + география ============== -->
+<section class="contact-strip">
+  <div class="wrap">
+    <div class="row">
+      <a href="tel:+79595862550" class="phone-link">+7 959 586 25 50</a>
+      <a href="tel:+79595862550" class="contact-cta">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1C8.7 6.5 8.5 5.2 8.5 4c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+        Связаться с нами
+      </a>
+      <div class="geo">Работаем по всей ЛНР</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ВАШ ПРАЗДНИК В РУКАХ ПРОФЕССИОНАЛОВ — полноэкранное фото + горизонтальные карточки ============== -->
+<section class="agency" id="agency">
+  <div class="agency-hero">
+    <div class="agency-photo-bg">
+      <img src="./photos/photo-02.jpg" alt="Хозяйка агентства">
+    </div>
+    <div class="agency-overlay"></div>
+    <div class="agency-label-left">
+      <div class="sec-label">№01 · о нас</div>
+    </div>
+    <div class="agency-hero-content">
+      <h2>Ваш праздник в руках <em>профессионалов</em></h2>
+      <p class="agency-sub">Вам не надо беспокоиться об организации —<br><strong>мы всё берём на себя</strong></p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="agency-cards">
+      <div class="agency-card">
+        <div class="num">01</div>
+        <p><strong>Создаём уникальные фотозоны</strong> под любой формат события — от камерных встреч до масштабных торжеств.</p>
+      </div>
+      <div class="agency-card">
+        <div class="num">02</div>
+        <p><strong>Подбираем индивидуальные элементы</strong> под ваш запрос — цветы, текстиль, свет, декор.</p>
+      </div>
+      <div class="agency-card">
+        <div class="num">03</div>
+        <p><strong>Разрабатываем концепцию</strong> и реализуем её в пространстве — с вниманием к каждой детали.</p>
+      </div>
+      <div class="agency-card">
+        <div class="num">04</div>
+        <p><strong>Создаём, оформляем и монтируем</strong> фотозоны так, чтобы фотографии ваших гостей остались красивыми на всю жизнь.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ПОЧЕМУ МЫ — лента с 4 преимуществами ============== -->
+<section class="why">
+  <div class="wrap">
+    <div class="why-head">
+      <div class="bar"></div>
+      <h3>Почему мы?</h3>
+      <div class="line"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">1</div>
+        <div class="why-txt">Более 50 оформленных мероприятий</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">2</div>
+        <div class="why-txt">Фиксированная цена</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">3</div>
+        <div class="why-txt">Реальные отзывы</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">4</div>
+        <div class="why-txt">Работаем по договору</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 03 WORKS CAROUSEL ============== -->
+<section class="works" id="works">
+  <div class="works-head">
+    <div>
+      <div class="sec-label">№02 · портфолио</div>
+      <h2>Наши <em>работы</em></h2>
+    </div>
+    <div class="works-nav">
+      <button id="works-prev" aria-label="Предыдущее">‹</button>
+      <button id="works-next" aria-label="Следующее">›</button>
+    </div>
+  </div>
+
+  <div class="works-track" id="works-track">
+    <div class="work-card">
+      <div class="photo" data-photo="21"><div class="photo-num">фото 21</div></div>
+      <div class="work-title">Свадьбы</div>
+      <div class="work-tag">Арки · флористика · выездные регистрации</div>
+    </div>
+    <div class="work-card">
+      <div class="photo" data-photo="04"><div class="photo-num">фото 04</div></div>
+      <div class="work-title">Детские праздники</div>
+      <div class="work-tag">Тематический декор · шары · сладкий стол</div>
+    </div>
+    <div class="work-card">
+      <div class="photo" data-photo="19"><div class="photo-num">фото 19</div></div>
+      <div class="work-title">Частные события</div>
+      <div class="work-tag">Камерные форматы · фотосъёмки · свидания</div>
+    </div>
+    <div class="work-card">
+      <div class="photo" data-photo="11"><div class="photo-num">фото 11</div></div>
+      <div class="work-title">Юбилеи</div>
+      <div class="work-tag">Неон · объёмный декор · оформление зала</div>
+    </div>
+    <div class="work-card">
+      <div class="photo" data-photo="07"><div class="photo-num">фото 07</div></div>
+      <div class="work-title">Корпоративы</div>
+      <div class="work-tag">Фирменный стиль · пресс-волл · вечера</div>
+    </div>
+  </div>
+
+  <div class="works-hint">— листайте стрелками или жестом —</div>
+</section>
+
+<!-- ============== ПАКЕТЫ — 3 тарифа ============== -->
+<section class="packages" id="packages">
+  <div class="wrap">
+    <div class="packages-head">
+      <div class="bar"></div>
+      <h2>Пакеты <em>услуг</em></h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="packages-grid">
+      <!-- Основа -->
+      <div class="pack-card" data-roman="Ⅰ">
+        <div class="pack-title">Базовый</div>
+        <div class="pack-price">
+          <span class="from">от</span>
+          20 000 ₽
+        </div>
+        <div class="pack-section-title">Подходит для</div>
+        <div class="pack-for">Дня рождения, свадьбы, фотосессии, девичника</div>
+
+        <div class="pack-section-title">Что входит</div>
+        <ul class="pack-list">
+          <li>Консультация и подбор концепции</li>
+          <li>1 акцентная фотозона (фон + базовый декор)</li>
+          <li>Оформление стола молодожёнов / именинника</li>
+          <li>Композиции из искусственных или сезонных цветов</li>
+          <li>Аренда декоративных элементов (свечи, вазы, стойки)</li>
+          <li>Монтаж и демонтаж</li>
+        </ul>
+
+        <div class="pack-diff">Создаём красивый акцент, без полного оформления зала</div>
+        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+      </div>
+
+      <!-- Авторский (центральный, выделенный) -->
+      <div class="pack-card center" data-roman="Ⅱ">
+        <div class="pack-title">Стандарт</div>
+        <div class="pack-price">
+          <span class="from">от</span>
+          50 000 ₽
+        </div>
+        <div class="pack-section-title">Подходит для</div>
+        <div class="pack-for">Свадьбы до 50 гостей, юбилея, корпоративного события</div>
+
+        <div class="pack-section-title">Что входит</div>
+        <ul class="pack-list">
+          <li>Разработка индивидуальной концепции</li>
+          <li>Фотозона с объёмным декором</li>
+          <li>Оформление президиума / главного стола</li>
+          <li>Декор гостевых столов (композиции, свечи)</li>
+          <li>План рассадки / welcome-зона</li>
+          <li>Текстильное оформление</li>
+          <li>Цветочный декор (частично живые цветы)</li>
+          <li>Световые элементы (гирлянды / подсветка)</li>
+          <li>Монтаж и демонтаж</li>
+        </ul>
+
+        <div class="pack-diff">Оформляется весь зал, создаётся цельная атмосфера</div>
+        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+      </div>
+
+      <!-- Эксклюзив -->
+      <div class="pack-card" data-roman="Ⅲ">
+        <div class="pack-title">Премиум</div>
+        <div class="pack-price">
+          <span class="from">от</span>
+          100 000 ₽
+        </div>
+        <div class="pack-section-title">Подходит для</div>
+        <div class="pack-for">Свадьбы, масштабные мероприятия, статусные события</div>
+
+        <div class="pack-section-title">Что входит</div>
+        <ul class="pack-list">
+          <li>Авторская концепция и 3D-визуализация</li>
+          <li>Полное оформление зала и зоны церемонии</li>
+          <li>Индивидуальный дизайн фотозоны</li>
+          <li>Эксклюзивные конструкции (арки, подвесной декор)</li>
+          <li>Полный флористический декор (живые цветы)</li>
+          <li>Световое оформление (архитектурная подсветка)</li>
+          <li>Брендированные элементы / персонализация</li>
+          <li>Координация работы подрядчиков по декору</li>
+          <li>Монтаж + присутствие декоратора на мероприятии</li>
+        </ul>
+
+        <div class="pack-diff">Эффект «вау», сложные конструкции, премиальные материалы</div>
+        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: var(--s5); padding: var(--s3) var(--s4); font-family: var(--f-serif); font-style: italic; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.45; color: var(--cocoa); font-weight: 500; max-width: 900px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">Любой тариф собирается под вас индивидуально — <span style="color: var(--burgundy); font-weight: 600;">цена отправная точка</span></div>
+  </div>
+</section>
+
+<!-- ============== 04 CONSULT ============== -->
+<section class="consult">
+  <div class="wrap">
+    <div class="consult-grid">
+      <div class="consult-photo photo" data-photo="10"><div class="photo-num">фото 10</div></div>
+      <div class="consult-text">
+        <div class="sec-label">№03 · первый шаг</div>
+        <h2>Перед началом — <em>консультация</em></h2>
+        <p>На консультации подробно обсудим ваши пожелания, формат события и стилистику.</p>
+        <p>Подберём варианты оформления и предложим решения под ваш бюджет.</p>
+
+        <div class="consult-phone">
+          <div class="l">Звоните</div>
+          <a href="tel:+79595862550" class="num">+7 959 586 25 50</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 05 PROCESS ============== -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="process-head">
+      <div class="sec-label">№04 · процесс</div>
+      <h2>Как мы <em>работаем</em></h2>
+    </div>
+
+    <div class="process-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="photo" data-photo="15"><div class="photo-num">фото 15</div></div>
+        <div class="step-title">Консультация</div>
+        <div class="step-desc">Обсуждаем идею, формат события и бюджет.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="photo" data-photo="16"><div class="photo-num">фото 16</div></div>
+        <div class="step-title">Эскиз</div>
+        <div class="step-desc">Разрабатываем визуальную концепцию.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="photo" data-photo="17"><div class="photo-num">фото 17</div></div>
+        <div class="step-title">Мастерская</div>
+        <div class="step-desc">Создаём декор и подготавливаем элементы.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="photo" data-photo="18"><div class="photo-num">фото 18</div></div>
+        <div class="step-title">Монтаж</div>
+        <div class="step-desc">Оформляем фотозону на площадке.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 06 REVIEWS — одна фотка (02), цитаты меняются ============== -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="reviews-head">
+      <div class="sec-label">№05 · отзывы</div>
+      <h2>Что говорят <em>клиенты</em></h2>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="rh">
+          <div class="ravatar photo" data-photo="24"></div>
+          <div>
+            <div class="rname">Елена</div>
+            <div class="revent">Юбилей</div>
+          </div>
+        </div>
+        <p>Мы заказывали оформление юбилея 50 лет. Хотелось красиво, но без «перегруза». В итоге зал преобразился полностью — стильно, современно, со вкусом. Особенно понравилась работа с цветами и светом — атмосфера была очень тёплая и уютная. Спасибо за профессионализм, пунктуальность и внимательное отношение к деталям!</p>
+      </div>
+
+      <div class="review-card">
+        <div class="rh">
+          <div class="ravatar ravatar-pair"></div>
+          <div>
+            <div class="rname">Анастасия и Дмитрий</div>
+            <div class="revent">Свадьба</div>
+          </div>
+        </div>
+        <p>Спасибо вам за невероятную атмосферу на нашей свадьбе! Я мечтала о нежном, стильном оформлении — и в итоге получилось даже лучше, чем я представляла. Гости не переставали фотографироваться в фотозоне, а зал выглядел как из Pinterest. Всё было продумано до мелочей, и я чувствовала себя спокойно, потому что знала — декор в надёжных руках.</p>
+      </div>
+
+      <div class="review-card">
+        <div class="rh">
+          <div class="ravatar photo" data-photo="26"></div>
+          <div>
+            <div class="rname">Мария</div>
+            <div class="revent">Корпоративное мероприятие</div>
+          </div>
+        </div>
+        <p>Работать было очень комфортно. Нам предложили несколько концепций, сделали визуализацию, всё согласовали заранее. В день мероприятия команда приехала вовремя, монтаж прошёл быстро, и пространство буквально преобразилось. Руководство и гости были в восторге — получился действительно «вау-эффект». Обязательно будем обращаться снова!</p>
+      </div>
+    </div>
+
+    <div class="reviews-contact">
+      <h3 class="reviews-contact-title">Связаться <em>с нами</em></h3>
+      <a href="tel:+79595862550" class="reviews-contact-phone">+7 959 586 25 50</a>
+      <a href="tel:+79595862550" class="reviews-contact-btn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1C8.7 6.5 8.5 5.2 8.5 4c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+        Связаться с нами
+      </a>
+      <div class="reviews-contact-socials">
+        <a class="wa" href="https://wa.me/79595862550" target="_blank" rel="noopener" aria-label="MAX">
+          <svg viewBox="0 0 24 24"><defs><linearGradient id="maxbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4A7EF5"/><stop offset="55%" stop-color="#6B5CF0"/><stop offset="100%" stop-color="#9D4FE8"/></linearGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" ry="6" fill="url(#maxbg)"/><path d="M13.2 6.2c-3.3 0-6 2.7-6 6 0 1.2.4 2.4 1 3.3l-1.2 2.7c-.1.2.1.4.3.3l2.7-1.2c1 .6 2.1 1 3.3 1 3.3 0 6-2.7 6-6s-2.7-6-6-6zm0 9.3c-1.9 0-3.4-1.5-3.4-3.3s1.5-3.3 3.4-3.3 3.3 1.5 3.3 3.3-1.5 3.3-3.3 3.3z" fill="#fff"/></svg>
+        </a>
+        <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-mark">Фотозона</div>
+  <div class="wrap">
+    <div class="footer-row">
+      <span>© 2024 · Луганск</span>
+      <div class="footer-socials">
+        <a class="wa" href="https://wa.me/79595862550" target="_blank" rel="noopener" aria-label="MAX">
+          <svg viewBox="0 0 24 24"><defs><linearGradient id="maxbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4A7EF5"/><stop offset="55%" stop-color="#6B5CF0"/><stop offset="100%" stop-color="#9D4FE8"/></linearGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" ry="6" fill="url(#maxbg)"/><path d="M13.2 6.2c-3.3 0-6 2.7-6 6 0 1.2.4 2.4 1 3.3l-1.2 2.7c-.1.2.1.4.3.3l2.7-1.2c1 .6 2.1 1 3.3 1 3.3 0 6-2.7 6-6s-2.7-6-6-6zm0 9.3c-1.9 0-3.4-1.5-3.4-3.3s1.5-3.3 3.4-3.3 3.3 1.5 3.3 3.3-1.5 3.3-3.3 3.3z" fill="#fff"/></svg>
+        </a>
+        <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
+        </a>
+      </div>
+      <a href="tel:+79595862550">+7 959 586 25 50</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // === Светящиеся падающие крупицы в hero ===
+  (function spawnParticles() {
+    const host = document.getElementById('hero-particles');
+    if (!host) return;
+    const COUNT = 90; // очень много, но оооочень мелких
+    const sizeClasses = ['tiny', 'tiny', 'tiny', 'micro', 'micro', '']; // больше мелких
+    for (let i = 0; i < COUNT; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle ' + sizeClasses[Math.floor(Math.random() * sizeClasses.length)];
+      const duration = (7 + Math.random() * 11).toFixed(2);   // 7–18 сек
+      const delay = (-Math.random() * 18).toFixed(2);         // стартуют в разных фазах
+      const left = (Math.random() * 100).toFixed(2);          // 0–100%
+      const drift = ((Math.random() * 60) - 30).toFixed(1);   // -30px..+30px боковое смещение
+      p.style.left = left + '%';
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+      p.style.setProperty('--drift', drift + 'px');
+      host.appendChild(p);
+    }
+  })();
+
+  // Авто-подгрузка фото
+  document.querySelectorAll('.photo[data-photo]').forEach(el => {
+    const num = (el.getAttribute('data-photo') || '').padStart(2, '0');
+    if (!num) return;
+    const img = new Image();
+    img.onload = () => {
+      el.style.backgroundImage = `url('./photos/photo-${num}.jpg')`;
+      el.setAttribute('data-set', 'true');
+    };
+    img.src = `./photos/photo-${num}.jpg`;
+  });
+
+  // Карусель работ
+  const track = document.getElementById('works-track');
+  const prevBtn = document.getElementById('works-prev');
+  const nextBtn = document.getElementById('works-next');
+  if (track && prevBtn && nextBtn) {
+    const cardWidth = () => {
+      const card = track.querySelector('.work-card');
+      if (!card) return 400;
+      const gap = parseFloat(getComputedStyle(track).gap) || 24;
+      return card.offsetWidth + gap;
+    };
+    prevBtn.addEventListener('click', () => track.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+    nextBtn.addEventListener('click', () => track.scrollBy({ left:  cardWidth(), behavior: 'smooth' }));
+  }
+
+  // Отзывы — слайдер текстов (фото владелицы остаётся)
+  const reviews = [
+    { quote: 'Мы заказывали оформление юбилея 50 лет. Хотелось красиво, но без «перегруза». В итоге зал преобразился полностью — стильно, современно, со вкусом. Особенно понравилась работа с цветами и светом — атмосфера была очень тёплая и уютная. Спасибо за профессионализм, пунктуальность и внимательное отношение к деталям!', name: '— Елена', event: 'Юбилей · 2025' },
+    { quote: 'Спасибо вам за невероятную атмосферу на нашей свадьбе! Я мечтала о нежном, стильном оформлении — и в итоге получилось даже лучше, чем я представляла. Гости не переставали фотографироваться в фотозоне, а зал выглядел как из Pinterest. Всё было продумано до мелочей, и я чувствовала себя спокойно, потому что знала — декор в надёжных руках.', name: '— Анастасия и Дмитрий', event: 'Свадьба · 2025' },
+    { quote: 'Работать было очень комфортно. Нам предложили несколько концепций, сделали визуализацию, всё согласовали заранее. В день мероприятия команда приехала вовремя, монтаж прошёл быстро, и пространство буквально преобразилось. Руководство и гости были в восторге — получился действительно «вау-эффект». Обязательно будем обращаться снова!', name: '— Мария', event: 'Корпоративное мероприятие · 2025' },
+  ];
+  let ri = 0;
+  const rQuote = document.getElementById('t-quote');
+  const rName  = document.getElementById('t-name');
+  const rEvent = document.getElementById('t-event');
+  const rCount = document.getElementById('t-count');
+  const renderReview = () => {
+    const r = reviews[ri];
+    if (!rQuote) return;
+    rQuote.textContent = r.quote;
+    rName.textContent = r.name;
+    rEvent.textContent = r.event;
+    rCount.textContent = String(ri+1).padStart(2,'0') + ' · ' + String(reviews.length).padStart(2,'0');
+  };
+  const tnext = document.getElementById('t-next');
+  const tprev = document.getElementById('t-prev');
+  if (tnext) tnext.addEventListener('click', () => { ri = (ri+1) % reviews.length; renderReview(); });
+  if (tprev) tprev.addEventListener('click', () => { ri = (ri-1+reviews.length) % reviews.length; renderReview(); });
+</script>
+</body>
+</html>
