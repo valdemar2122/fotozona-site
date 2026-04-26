@@ -400,11 +400,11 @@ h2 em {
   gap: var(--s5);
   align-items: center;
 }
-.contact-strip .row .contact-cta {
-  justify-self: center;
-}
 .contact-strip .row .phone-link {
   justify-self: start;
+}
+.contact-strip .row .socials {
+  justify-self: center;
 }
 .contact-strip .row .geo {
   justify-self: end;
@@ -429,17 +429,20 @@ h2 em {
   gap: var(--s3);
 }
 .contact-strip .socials a {
-  width: 54px; height: 54px;
+  width: 52px; height: 52px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 50%;
-  background: var(--ivory);
-  box-shadow: 0 4px 14px -4px rgba(74, 22, 34, 0.25);
+  background: var(--cocoa);
+  border: 1px solid rgba(217, 180, 96, 0.4);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.4);
   transition: all .3s;
-  border: 2px solid transparent;
 }
 .contact-strip .socials a:hover {
-  transform: scale(1.12);
-  box-shadow: 0 8px 20px -4px rgba(74, 22, 34, 0.4);
+  transform: translateY(-3px) scale(1.08);
+  border-color: var(--gold-light);
+  box-shadow:
+    0 0 22px rgba(217, 180, 96, 0.45),
+    0 8px 20px -4px rgba(0, 0, 0, 0.5);
 }
 .contact-strip .socials svg { width: 26px; height: 26px; }
 .contact-strip .socials .wa svg { fill: var(--whatsapp); }
@@ -661,20 +664,30 @@ h2 em {
 .packages-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--s3);
+  gap: var(--s2);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 var(--s3);
+  box-sizing: border-box;
+}
+.packages > .wrap {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 .pack-card {
   border: 3px solid var(--antique-gold);
   border-radius: 4px;
   background: var(--cocoa);
   color: var(--cream-on-dark);
-  padding: var(--s5) var(--s4);
+  padding: var(--s3) var(--s3);
   display: flex;
   flex-direction: column;
-  gap: var(--s2);
+  gap: 8px;
   position: relative;
   transition: all .3s;
-  min-height: 420px;
+  min-height: 0;
   overflow: hidden;
 }
 .pack-card.center {
@@ -720,12 +733,12 @@ h2 em {
 .pack-price {
   font-family: var(--f-display);
   font-weight: 600;
-  font-size: clamp(36px, 4.2vw, 56px);
+  font-size: clamp(28px, 3vw, 42px);
   color: var(--antique-gold);
   text-align: center;
-  padding-bottom: var(--s3);
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(184, 151, 90, 0.35);
-  margin-bottom: var(--s2);
+  margin-bottom: 8px;
   line-height: 1;
 }
 .pack-card.center .pack-price { color: var(--wine-deep); border-bottom-color: rgba(107, 37, 55, 0.3); }
@@ -744,20 +757,20 @@ h2 em {
 .pack-section-title {
   font-family: 'Manrope', sans-serif;
   font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 600;
   color: var(--gold-light);
-  margin-top: var(--s2);
-  margin-bottom: var(--s1);
+  margin-top: 10px;
+  margin-bottom: 6px;
 }
 .pack-card.center .pack-section-title { color: var(--wine-deep); }
 .pack-for {
   font-size: 17px;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--cream-on-dark);
   font-weight: 400;
-  margin-bottom: var(--s2);
+  margin-bottom: 8px;
   opacity: 0.95;
 }
 .pack-card.center .pack-for { color: var(--cocoa); opacity: 1; font-weight: 500; }
@@ -765,15 +778,15 @@ h2 em {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   flex: 1;
 }
 .pack-list li {
   font-size: 17px;
-  line-height: 1.45;
+  line-height: 1.4;
   color: var(--cream-on-dark);
   font-weight: 400;
-  padding-left: 22px;
+  padding-left: 20px;
   position: relative;
   opacity: 0.95;
 }
@@ -788,12 +801,12 @@ h2 em {
 }
 .pack-card.center .pack-list li::before { color: var(--wine-deep); }
 .pack-diff {
-  margin-top: var(--s3);
-  padding: var(--s3);
+  margin-top: 10px;
+  padding: 12px 14px;
   background: rgba(184, 151, 90, 0.1);
   border-left: 3px solid var(--antique-gold);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--cream-on-dark);
   font-weight: 400;
   font-style: italic;
@@ -804,49 +817,160 @@ h2 em {
   color: var(--cocoa);
 }
 .pack-btn {
-  margin-top: var(--s3);
-  padding: 22px 32px;
-  border: 1px solid var(--antique-gold);
-  background: transparent;
-  color: var(--gold-light);
-  font-family: var(--f-serif);
-  font-style: italic;
-  font-size: 26px;
-  letter-spacing: 0.04em;
-  font-weight: 500;
+  margin-top: 14px;
+  padding: 14px 18px;
+  border: 1px solid rgba(74, 22, 34, 0.15);
+  background: #EBD9BD;
+  color: #4A1622;
+  font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  text-transform: uppercase;
   text-align: center;
-  transition: all .4s;
+  transition: all .25s;
   cursor: pointer;
   display: block;
-  text-shadow:
-    0 0 14px rgba(212, 183, 122, 0.55),
-    0 0 28px rgba(184, 151, 90, 0.35);
-  box-shadow:
-    0 0 22px rgba(184, 151, 90, 0.2),
-    inset 0 0 18px rgba(184, 151, 90, 0.08);
-  animation: btn-glow 3s ease-in-out infinite;
-}
-@keyframes btn-glow {
-  0%, 100% {
-    box-shadow: 0 0 22px rgba(184, 151, 90, 0.2), inset 0 0 18px rgba(184, 151, 90, 0.08);
-  }
-  50% {
-    box-shadow: 0 0 34px rgba(184, 151, 90, 0.4), inset 0 0 24px rgba(184, 151, 90, 0.15);
-  }
+  border-radius: 4px;
 }
 .pack-btn:hover {
-  background: var(--antique-gold);
-  color: var(--cocoa);
-  text-shadow: none;
+  transform: translateY(-2px);
 }
+/* 1-я карточка (Базовый) — светлый беж + бордовое свечение */
+.packages-grid .pack-card:nth-child(1) .pack-btn {
+  background: #F0DEC4;
+  color: #4A1622;
+  box-shadow:
+    0 0 14px rgba(107, 22, 38, 0.3),
+    0 0 28px rgba(74, 22, 34, 0.18),
+    0 4px 12px -4px rgba(74, 22, 34, 0.2);
+}
+.packages-grid .pack-card:nth-child(1) .pack-btn:hover {
+  box-shadow:
+    0 0 22px rgba(107, 22, 38, 0.5),
+    0 0 42px rgba(74, 22, 34, 0.32),
+    0 8px 18px -6px rgba(74, 22, 34, 0.3);
+}
+/* 2-я карточка (Стандарт, центр) — бордовая кнопка с золотым свечением */
+.packages-grid .pack-card:nth-child(2) .pack-btn,
 .pack-card.center .pack-btn {
-  border-color: var(--wine-deep);
-  color: var(--wine-deep);
+  background: #6B1626;
+  color: #FAF0D4;
+  border-color: rgba(217, 180, 96, 0.5);
+  text-shadow: 0 0 12px rgba(217, 180, 96, 0.5);
+  box-shadow:
+    0 0 16px rgba(217, 180, 96, 0.45),
+    0 0 32px rgba(184, 151, 90, 0.3),
+    0 4px 14px -4px rgba(0, 0, 0, 0.45);
+}
+.packages-grid .pack-card:nth-child(2) .pack-btn:hover,
+.pack-card.center .pack-btn:hover {
+  background: #7E1B30;
+  box-shadow:
+    0 0 26px rgba(217, 180, 96, 0.7),
+    0 0 50px rgba(184, 151, 90, 0.5),
+    0 10px 20px -6px rgba(0, 0, 0, 0.5);
+}
+/* 3-я карточка (Премиум) — тёплый беж + бордовое свечение */
+.packages-grid .pack-card:nth-child(3) .pack-btn {
+  background: #D4BC9A;
+  color: #4A1622;
+  box-shadow:
+    0 0 14px rgba(107, 22, 38, 0.32),
+    0 0 28px rgba(74, 22, 34, 0.2),
+    0 4px 12px -4px rgba(74, 22, 34, 0.22);
+}
+.packages-grid .pack-card:nth-child(3) .pack-btn:hover {
+  box-shadow:
+    0 0 22px rgba(107, 22, 38, 0.55),
+    0 0 42px rgba(74, 22, 34, 0.35),
+    0 8px 18px -6px rgba(74, 22, 34, 0.32);
+}
+
+/* === Базовый — светло-тёплый карамельно-кремовый фон + тёмный текст === */
+.packages-grid .pack-card:nth-child(1) {
+  background: linear-gradient(180deg, #ECD3B2 0%, #D8B98F 100%);
+}
+.packages-grid .pack-card:nth-child(1) .pack-title {
+  color: #2D1810;
   text-shadow:
-    0 0 12px rgba(107, 37, 55, 0.3),
-    0 0 24px rgba(107, 37, 55, 0.18);
-  box-shadow: 0 0 20px rgba(107, 37, 55, 0.15);
-  animation: none;
+    0 0 14px rgba(255, 245, 220, 0.45),
+    0 1px 0 rgba(255, 240, 210, 0.25);
+}
+.packages-grid .pack-card:nth-child(1) .pack-price { color: #2D1810; }
+.packages-grid .pack-card:nth-child(1) .pack-price .from { color: #4A2E1C; opacity: 0.85; }
+.packages-grid .pack-card:nth-child(1) .pack-section-title { color: #3B2419; }
+.packages-grid .pack-card:nth-child(1) .pack-for,
+.packages-grid .pack-card:nth-child(1) .pack-list li,
+.packages-grid .pack-card:nth-child(1) .pack-diff {
+  color: #2D1810;
+  opacity: 1;
+}
+.packages-grid .pack-card:nth-child(1) .pack-list li::before { color: #4A1622; }
+
+/* === Премиум — коричневый фон + золотая рамка + светлый текст + золотая кнопка === */
+.packages-grid .pack-card:nth-child(3) {
+  background: linear-gradient(180deg, #4A2E1C 0%, #3B2419 100%);
+  color: #F3E5D1;
+  border: 2.5px solid #D9B85F;
+  box-shadow:
+    0 0 0 1px rgba(217, 184, 95, 0.35),
+    0 0 28px rgba(217, 184, 95, 0.28),
+    0 0 60px rgba(184, 151, 90, 0.18);
+}
+.packages-grid .pack-card:nth-child(3)::after {
+  border-color: rgba(217, 184, 95, 0.55);
+}
+.packages-grid .pack-card:nth-child(3) .pack-title {
+  color: var(--gold-light);
+  text-shadow:
+    0 0 14px rgba(217, 184, 95, 0.7),
+    0 0 32px rgba(184, 151, 90, 0.5),
+    0 0 60px rgba(184, 151, 90, 0.3);
+}
+.packages-grid .pack-card:nth-child(3) .pack-price {
+  color: var(--antique-gold);
+  border-bottom-color: rgba(217, 184, 95, 0.4);
+}
+.packages-grid .pack-card:nth-child(3) .pack-price .from { color: var(--antique-gold); opacity: 0.85; }
+.packages-grid .pack-card:nth-child(3) .pack-section-title {
+  color: var(--gold-light);
+}
+.packages-grid .pack-card:nth-child(3) .pack-for,
+.packages-grid .pack-card:nth-child(3) .pack-list li,
+.packages-grid .pack-card:nth-child(3) .pack-diff {
+  color: var(--cream-on-dark);
+  opacity: 0.95;
+  text-shadow:
+    0 0 8px rgba(217, 184, 95, 0.25),
+    0 0 18px rgba(184, 151, 90, 0.12);
+}
+.packages-grid .pack-card:nth-child(3) .pack-list li::before { color: var(--gold-light); }
+.packages-grid .pack-card:nth-child(3) .pack-diff {
+  background: rgba(217, 184, 95, 0.12);
+  border-left-color: var(--antique-gold);
+  color: var(--cream-on-dark);
+}
+/* Золотая кнопка «Забронировать» в Премиум */
+.packages-grid .pack-card:nth-child(3) .pack-btn {
+  background: linear-gradient(180deg, #E8CC88 0%, #C9A961 100%);
+  color: #4A1622;
+  border: 1px solid rgba(217, 184, 95, 0.6);
+  text-shadow: 0 0 10px rgba(255, 245, 215, 0.55);
+  box-shadow:
+    0 0 16px rgba(217, 184, 95, 0.55),
+    0 0 32px rgba(184, 151, 90, 0.4),
+    0 0 60px rgba(184, 151, 90, 0.22),
+    0 4px 14px -4px rgba(107, 22, 38, 0.25);
+}
+.packages-grid .pack-card:nth-child(3) .pack-btn:hover {
+  background: linear-gradient(180deg, #F0D898 0%, #D9B85F 100%);
+  box-shadow:
+    0 0 26px rgba(217, 184, 95, 0.85),
+    0 0 50px rgba(184, 151, 90, 0.6),
+    0 0 80px rgba(184, 151, 90, 0.35),
+    0 8px 18px -6px rgba(107, 22, 38, 0.35);
 }
 .pack-card.center .pack-btn:hover {
   background: var(--wine-deep);
@@ -1900,11 +2024,18 @@ footer {
 <section class="contact-strip">
   <div class="wrap">
     <div class="row">
-      <a href="tel:+79595862550" class="phone-link">+7 959 586 25 50</a>
-      <a href="tel:+79595862550" class="contact-cta">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1C8.7 6.5 8.5 5.2 8.5 4c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
-        Связаться с нами
-      </a>
+      <a href="tel:+79595862550" class="phone-link" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">+7 959 586 25 50</a>
+      <div class="socials">
+        <a class="wa" href="https://wa.me/79595862550" target="_blank" rel="noopener" aria-label="MAX">
+          <svg viewBox="0 0 24 24"><defs><linearGradient id="maxbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4A7EF5"/><stop offset="55%" stop-color="#6B5CF0"/><stop offset="100%" stop-color="#9D4FE8"/></linearGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" ry="6" fill="url(#maxbg)"/><path d="M13.2 6.2c-3.3 0-6 2.7-6 6 0 1.2.4 2.4 1 3.3l-1.2 2.7c-.1.2.1.4.3.3l2.7-1.2c1 .6 2.1 1 3.3 1 3.3 0 6-2.7 6-6s-2.7-6-6-6zm0 9.3c-1.9 0-3.4-1.5-3.4-3.3s1.5-3.3 3.4-3.3 3.3 1.5 3.3 3.3-1.5 3.3-3.3 3.3z" fill="#fff"/></svg>
+        </a>
+        <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
+        </a>
+      </div>
       <div class="geo">Работаем по всей ЛНР</div>
     </div>
   </div>
@@ -1918,7 +2049,7 @@ footer {
     </div>
     <div class="agency-overlay"></div>
     <div class="agency-label-left">
-      <div class="sec-label">№01 · о нас</div>
+      <div class="sec-label">о нас</div>
     </div>
     <div class="agency-hero-content">
       <h2>Ваш праздник в руках <em>профессионалов</em></h2>
@@ -1981,7 +2112,7 @@ footer {
 <section class="works" id="works">
   <div class="works-head">
     <div>
-      <div class="sec-label">№02 · портфолио</div>
+      <div class="sec-label">портфолио</div>
       <h2>Наши <em>работы</em></h2>
     </div>
     <div class="works-nav">
@@ -2036,7 +2167,7 @@ footer {
         <div class="pack-title">Базовый</div>
         <div class="pack-price">
           <span class="from">от</span>
-          20 000 ₽
+          15 000 ₽
         </div>
         <div class="pack-section-title">Подходит для</div>
         <div class="pack-for">Дня рождения, свадьбы, фотосессии, девичника</div>
@@ -2052,7 +2183,7 @@ footer {
         </ul>
 
         <div class="pack-diff">Создаём красивый акцент, без полного оформления зала</div>
-        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+        <a href="tel:+79595862550" class="pack-btn" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">Забронировать</a>
       </div>
 
       <!-- Авторский (центральный, выделенный) -->
@@ -2079,7 +2210,7 @@ footer {
         </ul>
 
         <div class="pack-diff">Оформляется весь зал, создаётся цельная атмосфера</div>
-        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+        <a href="tel:+79595862550" class="pack-btn" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">Забронировать</a>
       </div>
 
       <!-- Эксклюзив -->
@@ -2106,7 +2237,7 @@ footer {
         </ul>
 
         <div class="pack-diff">Эффект «вау», сложные конструкции, премиальные материалы</div>
-        <a href="https://wa.me/79595862550" target="_blank" rel="noopener" class="pack-btn">Забронировать</a>
+        <a href="tel:+79595862550" class="pack-btn" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">Забронировать</a>
       </div>
     </div>
 
@@ -2120,14 +2251,14 @@ footer {
     <div class="consult-grid">
       <div class="consult-photo photo" data-photo="10"><div class="photo-num">фото 10</div></div>
       <div class="consult-text">
-        <div class="sec-label">№03 · первый шаг</div>
+        <div class="sec-label">первый шаг</div>
         <h2>Перед началом — <em>консультация</em></h2>
         <p>На консультации подробно обсудим ваши пожелания, формат события и стилистику.</p>
         <p>Подберём варианты оформления и предложим решения под ваш бюджет.</p>
 
         <div class="consult-phone">
           <div class="l">Звоните</div>
-          <a href="tel:+79595862550" class="num">+7 959 586 25 50</a>
+          <a href="tel:+79595862550" class="num" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">+7 959 586 25 50</a>
         </div>
       </div>
     </div>
@@ -2138,7 +2269,7 @@ footer {
 <section class="process" id="process">
   <div class="wrap">
     <div class="process-head">
-      <div class="sec-label">№04 · процесс</div>
+      <div class="sec-label">процесс</div>
       <h2>Как мы <em>работаем</em></h2>
     </div>
 
@@ -2175,7 +2306,7 @@ footer {
 <section class="reviews" id="reviews">
   <div class="wrap">
     <div class="reviews-head">
-      <div class="sec-label">№05 · отзывы</div>
+      <div class="sec-label">отзывы</div>
       <h2>Что говорят <em>клиенты</em></h2>
     </div>
 
@@ -2216,8 +2347,8 @@ footer {
 
     <div class="reviews-contact">
       <h3 class="reviews-contact-title">Связаться <em>с нами</em></h3>
-      <a href="tel:+79595862550" class="reviews-contact-phone">+7 959 586 25 50</a>
-      <a href="tel:+79595862550" class="reviews-contact-btn">
+      <a href="tel:+79595862550" class="reviews-contact-phone" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">+7 959 586 25 50</a>
+      <a href="tel:+79595862550" class="reviews-contact-btn" onclick="return confirm('Позвонить по номеру +7 959 586 25 50?')">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1C8.7 6.5 8.5 5.2 8.5 4c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
         Связаться с нами
       </a>
