@@ -1954,15 +1954,15 @@ footer {
 
   /* AGENCY (3-й блок) */
   .agency, .works, .consult, .process, .reviews { padding: var(--s4) 0 var(--s4); }
-  .agency-photo-bg { aspect-ratio: 1280 / 800; }
-  .agency-photo-bg img { object-position: center 35%; }
+  .agency-photo-bg { aspect-ratio: 1280 / 900; }
+  .agency-photo-bg img { object-position: center 30%; }
   .agency-overlay {
     background:
-      linear-gradient(180deg, rgba(20, 10, 6, 0) 30%, rgba(20, 10, 6, 0.55) 75%, rgba(20, 10, 6, 0.85) 100%);
+      linear-gradient(180deg, rgba(20, 10, 6, 0.65) 0%, rgba(20, 10, 6, 0.35) 35%, rgba(20, 10, 6, 0.4) 100%);
   }
   .agency-hero-content {
     position: absolute;
-    top: auto; bottom: 0; left: 0; right: 0;
+    top: var(--s4); bottom: auto; left: 0; right: 0;
     transform: none;
     text-align: center;
     max-width: none;
@@ -1971,13 +1971,29 @@ footer {
   }
   .agency-label-left { top: var(--s2); left: var(--s2); right: var(--s2); }
   .agency-label-left .sec-label { font-size: 11px; letter-spacing: 0.24em; }
-  .agency-hero-content h2 { font-size: clamp(22px, 6vw, 32px); }
-  .agency-sub { font-size: clamp(14px, 4vw, 18px); margin: 0 auto; }
+  .agency-hero-content h2 {
+    font-size: clamp(24px, 6.5vw, 34px);
+    text-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.85),
+      0 4px 24px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(0, 0, 0, 0.5);
+  }
+  .agency-sub {
+    font-size: clamp(18px, 5vw, 24px);
+    margin: 0 auto;
+    text-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.95),
+      0 4px 24px rgba(0, 0, 0, 0.8);
+  }
 
   .agency-cards { grid-template-columns: 1fr 1fr; gap: 8px; padding: var(--s3) var(--s2); }
   .agency-card { padding: var(--s2); }
   .agency-card .num { font-size: 32px; }
-  .agency-card p { font-size: 15px; line-height: 1.4; }
+  .agency-card p { font-size: 16px; line-height: 1.45; color: #FFFFFF; opacity: 1; }
+  .agency-card p strong { color: #FFFFFF; }
+  /* Вторая карточка крупнее */
+  .agency-cards .agency-card:nth-child(2) p { font-size: 19px; line-height: 1.4; }
+  .agency-cards .agency-card:nth-child(2) p strong { font-size: 1.05em; }
 
   /* WORKS */
   .works-head { padding: 0 var(--s3); flex-direction: column; align-items: flex-start; gap: var(--s2); }
@@ -2038,7 +2054,8 @@ footer {
   .hero-role { font-size: clamp(20px, 6.4vw, 32px); margin: var(--s2) 0 var(--s3); }
   .hero-role::first-letter { font-size: 1.6em; padding-right: 4px; }
   .hero-cats {
-    font-size: clamp(11px, 2.8vw, 14px);
+    font-size: clamp(14px, 3.64vw, 18px);
+    font-weight: 700;
     letter-spacing: 0.08em;
     white-space: normal;
     width: auto;
@@ -2395,7 +2412,7 @@ footer {
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <div class="photo" data-photo="17"><div class="photo-num">фото 17</div></div>
+        <div class="photo" data-photo="13"><div class="photo-num">фото 13</div></div>
         <div class="step-title">Мастерская</div>
         <div class="step-desc">Создаём декор и подготавливаем элементы.</div>
       </div>
@@ -2530,7 +2547,7 @@ footer {
     img.src = `./photos/photo-${num}.jpg`;
   });
 
-  // Карусель работ
+  // Карусель работ — бесконечная (loop)
   const track = document.getElementById('works-track');
   const prevBtn = document.getElementById('works-prev');
   const nextBtn = document.getElementById('works-next');
@@ -2541,8 +2558,27 @@ footer {
       const gap = parseFloat(getComputedStyle(track).gap) || 24;
       return card.offsetWidth + gap;
     };
-    prevBtn.addEventListener('click', () => track.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => track.scrollBy({ left:  cardWidth(), behavior: 'smooth' }));
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+    nextBtn.addEventListener('click', () => {
+      const cw = cardWidth();
+      const max = maxScroll();
+      // Если уже у конца — прыгаем в начало
+      if (track.scrollLeft >= max - 4) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: cw, behavior: 'smooth' });
+      }
+    });
+    prevBtn.addEventListener('click', () => {
+      const cw = cardWidth();
+      const max = maxScroll();
+      // Если в начале — прыгаем в конец
+      if (track.scrollLeft <= 4) {
+        track.scrollTo({ left: max, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: -cw, behavior: 'smooth' });
+      }
+    });
   }
 
   // Отзывы — слайдер текстов (фото владелицы остаётся)
