@@ -1958,32 +1958,41 @@ footer {
   .agency-photo-bg img { object-position: center 30%; }
   .agency-overlay {
     background:
-      linear-gradient(180deg, rgba(20, 10, 6, 0.65) 0%, rgba(20, 10, 6, 0.35) 35%, rgba(20, 10, 6, 0.4) 100%);
+      linear-gradient(180deg,
+        rgba(20, 10, 6, 0.7) 0%,
+        rgba(20, 10, 6, 0.2) 28%,
+        rgba(20, 10, 6, 0.2) 60%,
+        rgba(20, 10, 6, 0.78) 100%);
   }
   .agency-hero-content {
     position: absolute;
-    top: var(--s4); bottom: auto; left: 0; right: 0;
+    top: 0; bottom: 0; left: 0; right: 0;
     transform: none;
     text-align: center;
     max-width: none;
-    padding: var(--s3);
+    padding: var(--s4) var(--s3) var(--s3);
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: auto;
   }
-  .agency-label-left { top: var(--s2); left: var(--s2); right: var(--s2); }
+  .agency-label-left { top: var(--s2); left: var(--s2); right: var(--s2); display: none; }
   .agency-label-left .sec-label { font-size: 11px; letter-spacing: 0.24em; }
   .agency-hero-content h2 {
+    margin: 0 auto;
     font-size: clamp(24px, 6.5vw, 34px);
     text-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.85),
-      0 4px 24px rgba(0, 0, 0, 0.7),
-      0 0 30px rgba(0, 0, 0, 0.5);
+      0 2px 6px rgba(0, 0, 0, 0.9),
+      0 4px 24px rgba(0, 0, 0, 0.75),
+      0 0 30px rgba(0, 0, 0, 0.55);
   }
   .agency-sub {
+    margin: auto auto 0;
     font-size: clamp(18px, 5vw, 24px);
-    margin: 0 auto;
     text-shadow:
       0 2px 6px rgba(0, 0, 0, 0.95),
-      0 4px 24px rgba(0, 0, 0, 0.8);
+      0 4px 24px rgba(0, 0, 0, 0.85);
   }
 
   .agency-cards { grid-template-columns: 1fr 1fr; gap: 8px; padding: var(--s3) var(--s2); }
