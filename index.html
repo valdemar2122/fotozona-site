@@ -1921,43 +1921,150 @@ footer {
 /* ============== MOBILE ============== */
 @media (max-width: 960px) {
   .wrap { padding: 0 var(--s3); }
-  .hero-nav { padding: var(--s2) var(--s3); flex-wrap: wrap; gap: var(--s2); justify-content: center; text-align: center; }
-  .hero-nav-center { order: 3; width: 100%; justify-content: center; gap: var(--s2); font-size: 9px; }
-  .hero-main { padding: var(--s4) var(--s3); }
-  .hero-foot { padding: var(--s3) var(--s3); flex-direction: column; gap: var(--s1); text-align: center; }
 
-  .agency, .works, .consult, .process, .reviews, .final { padding: var(--s5) 0; }
+  /* HERO */
+  .hero { min-height: auto; padding-bottom: var(--s4); }
+  .hero-nav { padding: var(--s2) var(--s3); flex-wrap: wrap; gap: var(--s1); justify-content: center; text-align: center; }
+  .hero-nav-center { order: 3; width: 100%; justify-content: center; gap: 14px; font-size: 12px; flex-wrap: wrap; }
+  .hero-main { padding: var(--s4) var(--s3) var(--s3); }
+  .hero-foot { padding: var(--s2) var(--s3) var(--s3); flex-direction: column; gap: var(--s1); text-align: center; }
+  .hero-bg-photo::before, .hero-bg-photo::after { width: 70vw; height: 70vw; max-width: 80vw; max-height: 80vh; opacity: 0.5; }
+  .hero-bg-photo::before { left: -25vw; }
+  .hero-bg-photo::after { right: -25vw; }
+  .hero-particles .particle, .hero-particles .particle.tiny, .hero-particles .particle.micro {
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+  }
 
-  .agency-grid { grid-template-columns: 1fr; gap: var(--s4); }
-  .works-head { padding: 0 var(--s3); flex-direction: column; align-items: flex-start; }
-  .works-track { padding: 0 var(--s3) var(--s2); }
-  .work-card { width: 85vw; }
-  .consult-grid { grid-template-columns: 1fr; gap: var(--s4); }
-  .process-grid { grid-template-columns: 1fr 1fr; }
-  .t-slide { grid-template-columns: 1fr; gap: var(--s3); min-height: auto; }
-  .t-quote-mark { font-size: 120px; top: -20px; }
-  .t-content { padding-left: var(--s3); }
-  .chip { min-width: 140px; padding: 11px 16px; }
-  .final-or::before, .final-or::after { display: none; }
-  .footer-row { flex-direction: column; gap: var(--s2); text-align: center; }
-  .footer-mark { font-size: 56px; }
-}
-@media (max-width: 960px) {
-  .why, .packages { padding: var(--s5) 0; }
-  .why-grid { grid-template-columns: 1fr 1fr; }
-  .packages-grid { grid-template-columns: 1fr; }
+  /* MARQUEE */
+  .marquee { padding: 12px 0; }
+  .marquee-item { font-size: 14px; }
+  .marquee-sep { font-size: 11px; }
+
+  /* CONTACT-STRIP — стек */
+  .contact-strip { padding: var(--s3) 0; }
+  .contact-strip .row { grid-template-columns: 1fr; gap: var(--s3); text-align: center; }
+  .contact-strip .row .phone-link,
+  .contact-strip .row .socials,
+  .contact-strip .row .geo { justify-self: center; }
+  .contact-strip .phone-link { font-size: clamp(26px, 7.5vw, 36px); }
+  .contact-strip .socials { gap: 14px; }
+  .contact-strip .socials a { width: 46px; height: 46px; }
+  .contact-strip .socials svg { width: 22px; height: 22px; }
+  .contact-strip .geo { font-size: 14px; white-space: normal; }
+
+  /* AGENCY (3-й блок) */
+  .agency, .works, .consult, .process, .reviews { padding: var(--s4) 0 var(--s4); }
+  .agency-photo-bg { aspect-ratio: 1280 / 800; }
+  .agency-photo-bg img { object-position: center 35%; }
+  .agency-overlay {
+    background:
+      linear-gradient(180deg, rgba(20, 10, 6, 0) 30%, rgba(20, 10, 6, 0.55) 75%, rgba(20, 10, 6, 0.85) 100%);
+  }
+  .agency-hero-content {
+    position: absolute;
+    top: auto; bottom: 0; left: 0; right: 0;
+    transform: none;
+    text-align: center;
+    max-width: none;
+    padding: var(--s3);
+    margin: 0;
+  }
+  .agency-label-left { top: var(--s2); left: var(--s2); right: var(--s2); }
+  .agency-label-left .sec-label { font-size: 11px; letter-spacing: 0.24em; }
+  .agency-hero-content h2 { font-size: clamp(22px, 6vw, 32px); }
+  .agency-sub { font-size: clamp(14px, 4vw, 18px); margin: 0 auto; }
+
+  .agency-cards { grid-template-columns: 1fr 1fr; gap: 8px; padding: var(--s3) var(--s2); }
+  .agency-card { padding: var(--s2); }
+  .agency-card .num { font-size: 32px; }
+  .agency-card p { font-size: 15px; line-height: 1.4; }
+
+  /* WORKS */
+  .works-head { padding: 0 var(--s3); flex-direction: column; align-items: flex-start; gap: var(--s2); }
+  .works-head h2 { font-size: clamp(28px, 7vw, 36px); }
+  .works-track { padding: 0 var(--s3) var(--s2); gap: var(--s2); }
+  .work-card { width: 78vw; }
+  .work-card .work-title { font-size: 22px; }
+  .work-card .work-tag { font-size: 13px; }
+
+  /* PACKAGES — стек, полная ширина */
+  .packages { padding: var(--s4) 0; }
+  .packages-grid { grid-template-columns: 1fr; padding: 0 var(--s3); gap: var(--s3); }
+  .pack-card { padding: var(--s3); min-height: auto; }
   .pack-card.center { transform: none; }
   .pack-card.center:hover { transform: translateY(-4px); }
-  .reviews-grid { grid-template-columns: 1fr; }
-  .contact-strip .row { grid-template-columns: 1fr; gap: var(--s2); text-align: center; }
-  .contact-strip .geo { text-align: center; }
-  .hero-flora-left, .hero-flora-right { width: 60%; opacity: 0.15; }
+  .pack-title { font-size: clamp(26px, 7vw, 32px); }
+  .pack-price { font-size: clamp(32px, 9vw, 42px); }
+  .pack-section-title { font-size: 12px; }
+  .pack-for, .pack-list li { font-size: 16px; }
+  .pack-diff { font-size: 15px; }
+
+  /* CONSULT */
+  .consult-grid { grid-template-columns: 1fr; gap: var(--s3); }
+  .consult-photo { aspect-ratio: 4 / 3; max-width: 100%; }
+  .consult-text h2 { font-size: clamp(24px, 6.5vw, 32px); }
+  .consult-text p { font-size: 16px; }
+  .consult-phone .num { font-size: clamp(24px, 7vw, 32px); }
+
+  /* PROCESS */
+  .process-grid { grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .step { padding-top: var(--s2); }
+  .step .step-num { font-size: 26px; }
+  .step .step-title { font-size: 17px; }
+  .step .step-desc { font-size: 13px; }
+
+  /* REVIEWS */
+  .reviews-grid { grid-template-columns: 1fr; gap: var(--s3); }
+  .reviews-head h2 { font-size: clamp(28px, 7vw, 36px); }
+  .review-card { padding: var(--s3); }
+  .review-card p { font-size: 18px; line-height: 1.45; }
+  .review-card p::before { font-size: 42px; vertical-align: -14px; }
+  .review-card .ravatar { width: 56px; height: 56px; }
+  .review-card .ravatar.ravatar-pair { width: 96px; height: 56px; }
+  .review-card .rname { font-size: 15px; }
+  .review-card .revent { font-size: 12px; }
+
+  /* REVIEWS CONTACT (нижний блок «Связаться с нами») */
+  .reviews-contact { padding: var(--s4) var(--s3); margin-top: var(--s4); }
+  .reviews-contact-title { font-size: clamp(26px, 7vw, 36px); }
+  .reviews-contact-phone { font-size: clamp(28px, 8vw, 42px); }
+  .reviews-contact-btn { padding: 14px 26px; font-size: 14px; }
+  .reviews-contact-socials { gap: var(--s2); }
+  .reviews-contact-socials a { width: 46px; height: 46px; }
+  .reviews-contact-socials svg { width: 22px; height: 22px; }
+
+  /* HERO TITLE / ROLE / CATS */
+  .hero-title { font-size: clamp(44px, 16vw, 80px); letter-spacing: 0.03em; }
+  .hero-role { font-size: clamp(20px, 6.4vw, 32px); margin: var(--s2) 0 var(--s3); }
+  .hero-role::first-letter { font-size: 1.6em; padding-right: 4px; }
+  .hero-cats {
+    font-size: clamp(11px, 2.8vw, 14px);
+    letter-spacing: 0.08em;
+    white-space: normal;
+    width: auto;
+    max-width: 92vw;
+    line-height: 1.45;
+    padding-top: var(--s2);
+  }
+
+  /* FOOTER */
+  .footer-row { flex-direction: column; gap: var(--s2); text-align: center; }
+  .footer-mark { font-size: 56px; }
+  .footer-socials { gap: 12px; }
+  .footer-socials a { width: 42px; height: 42px; }
+  .footer-socials svg { width: 20px; height: 20px; }
+
+  /* Прочее */
+  .why, .why-grid { display: none !important; }
+  .chip { min-width: 140px; padding: 11px 16px; }
 }
+
 @media (max-width: 520px) {
+  .agency-cards { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr; }
-  .final-chips { flex-direction: column; align-items: center; }
-  .chip { width: 100%; max-width: 280px; }
-  .why-grid { grid-template-columns: 1fr; }
+  .work-card { width: 86vw; }
+  .hero-nav-center a { font-size: 11px; }
+  .footer-row > * { font-size: 13px; }
 }
 </style>
 </head>
@@ -2032,7 +2139,7 @@ footer {
         <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
           <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </a>
-        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+        <a class="vk" href="https://vk.com/id880923308" target="_blank" rel="noopener" aria-label="ВКонтакте">
           <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
         </a>
       </div>
@@ -2359,7 +2466,7 @@ footer {
         <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
           <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </a>
-        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+        <a class="vk" href="https://vk.com/id880923308" target="_blank" rel="noopener" aria-label="ВКонтакте">
           <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
         </a>
       </div>
@@ -2380,7 +2487,7 @@ footer {
         <a class="tg" href="https://t.me/+79595862550" target="_blank" rel="noopener" aria-label="Telegram">
           <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </a>
-        <a class="vk" href="https://vk.com/fotozona_lugansk" target="_blank" rel="noopener" aria-label="ВКонтакте">
+        <a class="vk" href="https://vk.com/id880923308" target="_blank" rel="noopener" aria-label="ВКонтакте">
           <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.439-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.225 7.653 3.36 8 3.36 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z"/></svg>
         </a>
       </div>
