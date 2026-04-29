@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /index-final-backup.html
+Disallow: /index-final-v2.html
+
+User-agent: Yandex
+Allow: /
+Disallow: /index-final-backup.html
+Disallow: /index-final-v2.html
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
+
+User-agent: Googlebot
+Allow: /
+Disallow: /index-final-backup.html
+Disallow: /index-final-v2.html
+
+Host: fotozona.ru
+Sitemap: https://fotozona.ru/sitemap.xml
